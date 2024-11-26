@@ -23,6 +23,48 @@ connectionString = (
     f"Connection Timeout=30;"
 )
 
+def fetch_column_names(schema, table_name, cursor):
+    """Obtenir la liste des colonnes pour une table spécifique, en échappant les noms réservés."""
+    cursor.execute(f"""
+        SELECT COLUMN_NAME, DATA_TYPE
+        FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = '{schema}' AND TABLE_NAME = '{table_name}'
+    """)
+    return cursor.fetchall()
+
+def handle_table(schema, table_name, conn, output_dir):
+    """Traiter une table en gérant les colonnes problématiques."""
+    cursor = conn.cursor()
+    columns = fetch_column_names(schema, table_name, cursor)
+
+    # Construire une requête SQL dynamique avec échappement des colonnes
+    column_definitions = []
+    for column_name, data_type in columns:
+        # Échapper les noms réservés ou problématiques
+        if column_name.upper() in ("PRIMARY", "GROUP", "KEY"):
+            column_name = f"[{column_name}]"
+        if data_type in ("geometry", "xml", "geography"):  # Colonnes problématiques
+            column_definitions.append(f"CAST({column_name} AS NVARCHAR(MAX)) AS {column_name}")
+        else:
+            column_definitions.append(column_name)
+    
+    query = f"SELECT {', '.join(column_definitions)} FROM {schema}.{table_name}"
+    try:
+        # Exécuter la requête et lire les données
+        df = pd.read_sql(query, conn)
+        
+        # Vérifier si la table contient des données
+        if df.empty:
+            print(f"La table '{table_name}' est vide. Aucun fichier généré.")
+            return
+        
+        # Exporter les données dans un fichier CSV
+        output_file = os.path.join(output_dir, f"{table_name}.csv")
+        df.to_csv(output_file, index=False)
+        print(f"Les données de la table '{table_name}' ont été exportées dans le fichier '{output_file}'.")
+    except Exception as e:
+        print(f"Erreur lors de la lecture de la table '{table_name}': {e}")
+
 try:
     # Liste des schémas à traiter
     schemas = ["Person", "Production", "Sales"]
@@ -59,24 +101,8 @@ try:
         
         for table in tables:
             table_name = table.TABLE_NAME
-            try:
-                print(f"\nLecture des données de la table : {table_name}")
-                
-                # Lire les données de la table
-                query = f"SELECT * FROM {schema}.{table_name}"
-                df = pd.read_sql(query, conn)
-                
-                # Vérifier si la table contient des données
-                if df.empty:
-                    print(f"La table '{table_name}' est vide. Aucun fichier généré.")
-                    continue
-                
-                # Exporter les données de la table dans un fichier CSV
-                output_file = os.path.join(output_dir, f"{table_name}.csv")
-                df.to_csv(output_file, index=False)
-                print(f"Les données de la table '{table_name}' ont été exportées dans le fichier '{output_file}'.")
-            except Exception as e:
-                print(f"Erreur lors de la lecture ou de l'exportation de la table {table_name} : {e}")
+            print(f"\nLecture des données de la table : {table_name}")
+            handle_table(schema, table_name, conn, output_dir)
     
     # Fermer la connexion
     cursor.close()

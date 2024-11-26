@@ -28,7 +28,6 @@ def execute_script(script_path):
 # Liste des scripts à exécuter dans l'ordre
 scripts = [
     "scripts/total_generation_CSV.py",
-    "scripts/regroup_CSV.py",
     "scripts/nombre_CSV.py"
 ]
 
