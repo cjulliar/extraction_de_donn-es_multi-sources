@@ -1,3 +1,7 @@
 pandas
 pyodbc
 python-dotenv
+azure-storage-blob 
+pyarrow 
+azure-storage-file-datalake 
+azure-identity
