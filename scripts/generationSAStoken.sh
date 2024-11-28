@@ -42,10 +42,6 @@ SAS_URL="https://${STORAGE_ACCOUNT}.blob.core.windows.net/${STORAGE_CONTAINER}?$
 # Afficher l'URL SAS générée
 echo "SAS URL générée : $SAS_URL"
 
-# Sauvegarder l'URL SAS dans un fichier texte
-echo "$SAS_URL" > sas_url.txt
-echo "SAS URL enregistrée dans sas_url.txt."
-
 # Remplacer ou ajouter SAS_URL dans le fichier .env
 if grep -q "^SAS_URL=" ".env"; then
     # Remplacer la ligne existante
