@@ -89,10 +89,10 @@ def process_all_csvs_in_folder(input_folder, base_output_folder, image_column="i
 
 if __name__ == "__main__":
     # Dossier contenant les fichiers CSV
-    input_folder = "analyse_data/product_eval"
+    input_folder = "data/product_eval"
 
     # Dossier de base pour stocker les images
-    base_output_folder = "analyse_data/product_eval/image"
+    base_output_folder = "data/product_eval/image"
 
     # Traiter tous les fichiers CSV dans le dossier
     process_all_csvs_in_folder(input_folder, base_output_folder, image_column="image", id_column="item_ID", output_format="jpeg")

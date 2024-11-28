@@ -42,7 +42,7 @@ if __name__ == "__main__":
     input_folder = "data/product_eval"
 
     # Dossier de sortie pour les fichiers .csv
-    output_folder = "analyse_data/product_eval"
+    output_folder = "data/product_eval"
 
     # Convertir les fichiers .parquet en .csv
     convert_parquet_to_csv(input_folder, output_folder)
