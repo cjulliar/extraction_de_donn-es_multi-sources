@@ -5,3 +5,6 @@ azure-storage-blob
 pyarrow 
 azure-storage-file-datalake 
 azure-identity
+duckdb
+pillow
+tqdm

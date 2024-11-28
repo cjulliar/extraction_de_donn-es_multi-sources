@@ -163,3 +163,5 @@ cython_debug/
 
 
 data/
+data copy/
+analyse_data/
