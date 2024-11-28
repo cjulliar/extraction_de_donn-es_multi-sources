@@ -119,11 +119,11 @@ Ajoutez toutes les variables mentionnées ci-dessus dans un fichier `.env` à la
 
 ### 2. Rendre le script Bash exécutable
 
-À la racine du projet, rendez le script `setup_and_run_ordered.sh` exécutable :
+À la racine du projet, rendez le script `install.sh` exécutable :
 
 ```bash
 
-chmod  +x  setup_and_run_ordered.sh
+chmod  +x  install.sh
 
 ```
 
@@ -177,7 +177,7 @@ Ajoutez la ligne suivante dans l'éditeur, en remplaçant /chemin/absolu/vers/vo
 
   
 ```
-0  3  *  *  * /chemin/absolu/vers/votre/projet/setup_and_run_ordered.sh >> /chemin/absolu/vers/votre/projet/cron_log.txt 2>&1
+0  3  *  *  * /chemin/absolu/vers/votre/projet/install.sh >> /chemin/absolu/vers/votre/projet/cron_log.txt 2>&1
 ```
 
 
