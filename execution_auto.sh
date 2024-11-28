@@ -85,6 +85,36 @@ done
 
 echo "Tous les scripts ont été exécutés avec succès."
 
+# Suppression des fichiers .zip, .tgz, et .parquet après extraction
+echo "Suppression des fichiers extraits..."
+
+# Suppression des fichiers .zip
+ZIP_FILES=$(find "$PROJECT_DIR" -type f -name "*.zip")
+if [ -n "$ZIP_FILES" ]; then
+    echo "Suppression des fichiers .zip..."
+    find "$PROJECT_DIR" -type f -name "*.zip" -exec rm -f {} \;
+else
+    echo "Aucun fichier .zip trouvé à supprimer."
+fi
+
+# Suppression des fichiers .tgz
+TGZ_FILES=$(find "$PROJECT_DIR" -type f -name "*.tgz")
+if [ -n "$TGZ_FILES" ]; then
+    echo "Suppression des fichiers .tgz..."
+    find "$PROJECT_DIR" -type f -name "*.tgz" -exec rm -f {} \;
+else
+    echo "Aucun fichier .tgz trouvé à supprimer."
+fi
+
+# Suppression des fichiers .parquet
+PARQUET_FILES=$(find "$PROJECT_DIR" -type f -name "*.parquet")
+if [ -n "$PARQUET_FILES" ]; then
+    echo "Suppression des fichiers .parquet..."
+    find "$PROJECT_DIR" -type f -name "*.parquet" -exec rm -f {} \;
+else
+    echo "Aucun fichier .parquet trouvé à supprimer."
+fi
+
 # Désactiver l'environnement virtuel
 deactivate
 echo "Environnement virtuel désactivé."
