@@ -177,7 +177,7 @@ Ajoutez la ligne suivante dans l'éditeur, en remplaçant /chemin/absolu/vers/vo
 
   
 ```
-0  3  *  *  * /chemin/absolu/vers/votre/projet/install.sh >> /chemin/absolu/vers/votre/projet/cron_log.txt 2>&1
+0  3  *  *  * /chemin/absolu/vers/votre/projet/install.sh >> /chemin/absolu/vers/votre/projet/cron_log.log 2>&1
 ```
 
 
